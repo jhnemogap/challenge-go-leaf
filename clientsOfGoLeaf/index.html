@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Fintech #<span id="title-number"></span></title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Fintech #<span id="title-number"></span></h1>
+      <p id="description"></p>
+      <button class="cta-button" id="cta-button">Subir datos</button>
+    </div>
+  </body>
+
+  <script>
+    let titleNumber = Math.floor(Math.random() * 3) + 1;
+    document.getElementById('title-number').textContent = titleNumber.toString();
+
+    let description = '';
+    if (titleNumber === 1) {
+      description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    } else if (titleNumber === 2) {
+      description = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.';
+    } else if (titleNumber === 3) {
+      description = 'Et harum quidem rerum facilis est et expedita distinctio.';
+    }
+    document.getElementById('description').textContent = description;
+
+    // Generar console.info según el número del título
+    const apiKey = 'API-KEY-' + titleNumber;
+    const userIds = ['user-id-' + titleNumber + '-1', 'user-id-' + titleNumber + '-2'];
+    document.getElementById('cta-button').addEventListener('click', function() {
+      console.info('API Key:', apiKey);
+      console.info('User IDs:', userIds);
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F8F8F8;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #0070F3;
+      color: #FFFFFF;
+      border-radius: 4px;
+    }
+  </style>
+</html>
