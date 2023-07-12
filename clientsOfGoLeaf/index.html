@@ -1,76 +1,247 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Fintech #<span id="title-number"></span></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Simular Cliente</title>
   </head>
 
-  <body>
-    <div class="container">
-      <h1>Fintech #<span id="title-number"></span></h1>
-      <p id="description"></p>
+  <body class="container">
+    <main>
+      <h1 id="client-name" class="page-title">nombre cliente</h1>
+      <p id="description">descripción del cliente</p>
+
+      <h3>Bienvenido ¡<span id="user-name">nombre usuario</span>!</h3>
       <button class="cta-button" id="cta-button">Subir datos</button>
-    </div>
+    </main>
+
+    <section class="section-data-to-simulate">
+      <h1>Selecciona los datos de la simulación desde acá</h1>
+      <main class="fields-container">
+        <fieldset id="select-client" class="field-select-client">
+          <legend>Seleccione un cliente:</legend>
+          <label>
+            <input type="radio" name="clientId" value="0" />
+            Fintech #1
+          </label>
+          <label>
+            <input type="radio" name="clientId" value="1" />
+            Fintech #2
+          </label>
+          <label>
+            <input type="radio" name="clientId" value="2" />
+            Fintech #3
+          </label>
+          <label>
+            <input type="radio" name="clientId" value="3" />
+            #No existe
+          </label>
+        </fieldset>
+        <fieldset id="select-user" class="field-select-user" disabled>
+          <legend>Seleccione un usuario:</legend>
+          <label>
+            <input type="radio" name="userId" value="0" />
+            usuario 1
+          </label>
+          <label>
+            <input type="radio" name="userId" value="1" />
+            usuario 2
+          </label>
+        </fieldset>
+      </main>
+    </section>
   </body>
 
-  <script>
-    let titleNumber = Math.floor(Math.random() * 3) + 1;
-    document.getElementById('title-number').textContent = titleNumber.toString();
+  <script defer>
+    const clients = [
+      {
+        uuid: "ABC90001XYZ",
+        name: "CLARA",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        apiKey: "x-f2g39Fd2-eg0f2-x",
+        users: [
+          {
+            uuid: "DEF10001TUW",
+            name: "Carlos",
+          },
+          {
+            uuid: "DEF10002TUW",
+            name: "Andrea",
+          }
+        ],
+      },
+      {
+        uuid: "ABC90002XYZ",
+        name: "JEEVES",
+        description: "Sed ut perspiciatis unde omnis error sit voluptatem.",
+        apiKey: "x-lJCp02-MV0f2-x",
+        users: [
+          {
+            uuid: "DEF20001TUW",
+            name: "Luisa",
+          },
+          {
+            uuid: "DEF20002TUW",
+            name: "Guillermo",
+          }
+        ],
+      },
+      {
+        uuid: "ABC90003XYZ",
+        name: "IRIS",
+        description: "Et harum quidem rerum facilis est et expedita distinctio.",
+        apiKey: "x-vPDo289-qu210kc-x",
+        users: [
+          {
+            uuid: "DEF30001TUW",
+            name: "Luisa",
+          },
+          {
+            uuid: "DEF30002TUW",
+            name: "Cesar",
+          }
+        ],
+      },
+      {
+        uuid: "ABC90004XYZ",
+        name: "Fintech #4 (no es cliente)",
+        description: "Este no es un cliente con el que tengamos contrato...",
+        apiKey: "x-fakeX1000-Soy100%Real-x",
+        users: [
+          {
+            uuid: "DEF40001TUW",
+            name: "Juan",
+          },
+          {
+            uuid: "DEF40002TUW",
+            name: "Felipe",
+          }
+        ],
+      }
+    ];
+    const $clientName = document.getElementById("client-name");
+    const $userName = document.getElementById("user-name");
+    const $description = document.getElementById("description");
+    const $clients = document.getElementById("select-client");
+    const $users = document.getElementById("select-user");
+    const $cta = document.getElementById("cta-button");
 
-    let description = '';
-    if (titleNumber === 1) {
-      description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-    } else if (titleNumber === 2) {
-      description = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.';
-    } else if (titleNumber === 3) {
-      description = 'Et harum quidem rerum facilis est et expedita distinctio.';
+    let selectedClientId;
+    let selectedApiKey;
+    let selectedUserId;
+
+    function changeClient(clientValue) {
+      const client = clients[parseInt(clientValue)];
+      selectedClientId = client.uuid;
+      selectedApiKey = client.apiKey;
+      $clientName.textContent = client.name;
+      $description.textContent = client.description;
+      changeUser(0);
     }
-    document.getElementById('description').textContent = description;
 
-    // Generar console.info según el número del título
-    const apiKey = 'API-KEY-' + titleNumber;
-    const userIds = ['user-id-' + titleNumber + '-1', 'user-id-' + titleNumber + '-2'];
-    document.getElementById('cta-button').addEventListener('click', function() {
-      console.info('API Key:', apiKey);
-      console.info('User IDs:', userIds);
+    function changeUser(userValue) {
+      const $usersRadio = $users.querySelectorAll("[name=userId]");
+      const user = clients
+        .find((c) => c.uuid === selectedClientId)
+        .users[parseInt(userValue)];
+      selectedUserId = user.uuid;
+      $userName.textContent = user.name;
+      $users.disabled = false;
+      $usersRadio[userValue].checked = true;
+    }
+
+    $clients.addEventListener("change", function (event) {
+      if (event.target.name === "clientId") changeClient(event.target.value);
+    });
+
+    $users.addEventListener("change", function (event) {
+      if (event.target.name === "userId") changeUser(event.target.value);
+    });
+
+    $cta.addEventListener("click", function() {
+      if (!!selectedClientId && !!selectedUserId) {
+        console.table({
+          client: selectedClientId,
+          apiKey: selectedApiKey,
+          user: selectedUserId,
+        });
+      }
     });
   </script>
 
   <style>
+    :root {
+      --brand-color-primary: #26970D;
+      --brand-color-secondary: #CFFAC7;
+      --font-color-primary: antiquewhite;
+      --bg-color-primary: midnightblue;
+    }
+    html {
+      font-size: 16px;
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #F8F8F8;
-      color: #333333;
       margin: 0;
       padding: 0;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px;
-    }
-
-    h1 {
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+      color: var(--font-color-primary);
+      background-color: var(--bg-color-primary);
     }
 
     p {
-      font-size: 16px;
+      font-size: 1rem;
       line-height: 1.5;
-      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 48rem;
+      margin: 0 auto;
+      padding: 2.5rem;
+    }
+
+    .page-title {
+      margin-bottom: 1.5rem;
+      font-size: calc(1rem * 3);
+      font-weight: bold;
+    }
+
+    .section-data-to-simulate {
+      margin: 2rem 0;
+      padding: 1rem;
+      border: 2px solid var(--brand-color-primary);
+      border-radius: 1rem;
+    }
+    .section-data-to-simulate>h1 {
+      margin-top: 0;
+    }
+
+    .fields-container {
+      display: flex;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .field-select-client, .field-select-user {
+      width: 100%;
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      border-radius: 0.5rem;
+    }
+    .field-select-user {
+      justify-content: center;
     }
 
     .cta-button {
       display: inline-block;
-      padding: 12px 20px;
-      font-size: 18px;
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
       font-weight: bold;
       text-decoration: none;
-      background-color: #0070F3;
-      color: #FFFFFF;
-      border-radius: 4px;
+      color: var(--bg-color-primary);
+      background-color: var(--brand-color-secondary);
+      border-radius: 0.5rem;
+
     }
   </style>
 </html>
