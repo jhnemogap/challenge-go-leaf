@@ -1,18 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Fintech #<span id="title-number"></span></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Simular Cliente</title>
   </head>
 
-  <body>
-    <div class="container">
-      <h1>Fintech #<span id="title-number"></span></h1>
+  <body class="container">
+    <main>
+      <h1 class="page-title">Fintech #<span id="title-number"></span></h1>
       <p id="description"></p>
       <button class="cta-button" id="cta-button">Subir datos</button>
-    </div>
+    </main>
+
+    <section class="section-data-to-simulate">
+      <h1>Selecciona los datos de la simulación desde acá</h1>
+      <main class="fields-container">
+        <fieldset class="field-select-client">
+          <legend>Seleccione un cliente:</legend>
+          <label>
+            <input type="radio" name="clientId" value="20001" checked>
+            Fintech #1
+          </label>
+          <label>
+            <input type="radio" name="clientId" value="20002">
+            Fintech #2
+          </label>
+          <label>
+            <input type="radio" name="clientId" value="20003">
+            Fintech #3
+          </label>
+          <label>
+            <input type="radio" name="clientId" value="20003">
+            #No existe
+          </label>
+        </fieldset>
+        <fieldset class="field-select-user">
+          <legend>Seleccione un usuario:</legend>
+          <label>
+            <input type="radio" name="userId" value="10001" checked>
+            #001
+          </label>
+          <label>
+            <input type="radio" name="userId" value="10002">
+            #002
+          </label>
+          <label>
+            <input type="radio" name="userId" value="10003">
+            #No Existe
+          </label>
+        </fieldset>
+      </main>
+    </section>
   </body>
 
-  <script>
+  <script defer>
     let titleNumber = Math.floor(Math.random() * 3) + 1;
     document.getElementById('title-number').textContent = titleNumber.toString();
 
@@ -26,7 +68,6 @@
     }
     document.getElementById('description').textContent = description;
 
-    // Generar console.info según el número del título
     const apiKey = 'API-KEY-' + titleNumber;
     const userIds = ['user-id-' + titleNumber + '-1', 'user-id-' + titleNumber + '-2'];
     document.getElementById('cta-button').addEventListener('click', function() {
@@ -36,41 +77,78 @@
   </script>
 
   <style>
+    :root {
+      --brand-color-primary: #26970D;
+      --brand-color-secondary: #CFFAC7;
+      --font-color-primary: antiquewhite;
+      --bg-color-primary: midnightblue;
+    }
+    html {
+      font-size: 16px;
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #F8F8F8;
-      color: #333333;
       margin: 0;
       padding: 0;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px;
-    }
-
-    h1 {
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+      color: var(--font-color-primary);
+      background-color: var(--bg-color-primary);
     }
 
     p {
-      font-size: 16px;
+      font-size: 1rem;
       line-height: 1.5;
-      margin-bottom: 30px;
+      margin-bottom: 2rem;
+    }
+
+    .container {
+      max-width: 48rem;
+      margin: 0 auto;
+      padding: 2.5rem;
+    }
+
+    .page-title {
+      margin-bottom: 1.5rem;
+      font-size: calc(1rem * 3);
+      font-weight: bold;
+    }
+
+    .section-data-to-simulate {
+      margin: 2rem 0;
+      padding: 1rem;
+      border: 2px solid var(--brand-color-primary);
+      border-radius: 1rem;
+    }
+    .section-data-to-simulate>h1 {
+      margin-top: 0;
+    }
+
+    .fields-container {
+      display: flex;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .field-select-client, .field-select-user {
+      width: 100%;
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+      border-radius: 0.5rem;
+    }
+    .field-select-user {
+      justify-content: center;
     }
 
     .cta-button {
       display: inline-block;
-      padding: 12px 20px;
-      font-size: 18px;
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
       font-weight: bold;
       text-decoration: none;
-      background-color: #0070F3;
-      color: #FFFFFF;
-      border-radius: 4px;
+      color: var(--bg-color-primary);
+      background-color: var(--brand-color-secondary);
+      border-radius: 0.5rem;
+
     }
   </style>
 </html>
