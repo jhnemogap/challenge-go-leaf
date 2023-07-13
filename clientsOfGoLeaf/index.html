@@ -154,7 +154,7 @@
       if (!!selectedApiKey && !!selectedUserId) {
         const BASE_URL = "http://localhost:5010";
         const baseUrl = new URL("/", BASE_URL);
-        const webFormUrl = new URL("api/resources/urls/upload-files", baseUrl);
+        const webFormUrl = new URL("api/resources/file-upload-url", baseUrl);
         webFormUrl.searchParams.set("user_id", selectedUserId);
         window.fetch(webFormUrl, {
           method: "GET",
