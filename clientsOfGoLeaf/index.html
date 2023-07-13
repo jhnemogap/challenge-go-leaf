@@ -150,23 +150,37 @@
       $usersRadio[userValue].checked = true;
     }
 
+    function onClickCTA() {
+      if (!!selectedApiKey && !!selectedUserId) {
+        const BASE_URL = "http://localhost:5010";
+        const baseUrl = new URL("/", BASE_URL);
+        const webFormUrl = new URL("api/resources/urls/upload-files", baseUrl);
+        webFormUrl.searchParams.set("user_id", selectedUserId);
+        window.fetch(webFormUrl, {
+          method: "GET",
+          headers: { "x-api-key": selectedApiKey },
+        })
+          .then(async (resp) => {
+            if (resp.status === 200) return resp.json();
+            throw new Error(
+              "Ha ocurrido un error",
+              { cause: { ...resp, body: await resp.json() },
+            });
+          })
+          .then((resp) => window.open(resp.url, "_blank"))
+          .catch((err) => alert(err.message));
+      }
+    }
+
     $clients.addEventListener("change", function (event) {
-      if (event.target.name === "clientId") changeClient(event.target.value);
+      if (event.target?.name === "clientId") changeClient(event.target?.value);
     });
 
     $users.addEventListener("change", function (event) {
-      if (event.target.name === "userId") changeUser(event.target.value);
+      if (event.target?.name === "userId") changeUser(event.target?.value);
     });
 
-    $cta.addEventListener("click", function() {
-      if (!!selectedClientId && !!selectedUserId) {
-        console.table({
-          client: selectedClientId,
-          apiKey: selectedApiKey,
-          user: selectedUserId,
-        });
-      }
-    });
+    $cta.addEventListener("click", onClickCTA);
   </script>
 
   <style>
