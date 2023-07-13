@@ -28,7 +28,7 @@ export const handler: Handlers<FileUploadUrlResponse | null> = {
       );
     }
     const body = generateRespBody({ userId, clientId: client.id });
-    return new Response(JSON.stringify(body));
+    return new Response(JSON.stringify(body), { status: 200 });
   },
 };
 
