@@ -13,9 +13,12 @@ export interface FormDetail {
 
 export interface InputToFormDetail {
   label: string;
-  placeholder?: string;
+  name: string;
+  required: boolean;
   type: 'text' | 'textArea' | 'number' | 'datepicker' | 'select';
-  options?: string[] | number[];
   valueType: string | string[] | number | number[] | boolean | 'timestamp';
+  defaultValue?: string | number | boolean;
+  options?: string[] | number[];
+  placeholder?: string;
   fileType?: 'pdf' | 'png' | 'jpeg' | null;
 }

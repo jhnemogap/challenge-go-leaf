@@ -19,16 +19,20 @@ export default function Home(props: PageProps) {
       <Head>
         <title>GoLeaf - Automatiza alta de empresas</title>
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
-        <header>
-          <GoLeafLogo />
-        </header>
-        <main>
-          <h1>Bienvenido a GoLeaf <span>{user?.name}</span></h1>
-          <p>Para dar de alta tu empresa en {client.name}</p>
-          <p>Sube tus datos aquí</p>
-          <FormSection template={template} />
-        </main>
+      <div class="h-full min-h-screen pt-2 px-4 pb-8 bg-green-50">
+        <div class="m-auto w-full max-w-5xl">
+          <header>
+            <GoLeafLogo />
+          </header>
+          <main>
+            <h1 class='text(4xl center) leading-normal'>
+              Bienvenido a GoLeaf <span>{user?.name}</span>
+            </h1>
+            <p>Para dar de alta tu empresa en {client.name}</p>
+            <p>Sube tus datos aquí</p>
+            <FormSection template={template} />
+          </main>
+        </div>
       </div>
     </>
   );

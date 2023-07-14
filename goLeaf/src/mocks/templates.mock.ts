@@ -11,19 +11,26 @@ export const TEMPLATES_MOCK = new Map<string, FormTemplate>([
         inputs: [
           {
             label: 'Nombre completo',
+            name: 'full-name',
+            required: true,
             type: 'text',
             valueType: 'string',
             fileType: null,
           },
           {
             label: 'Número de identificación personal',
+            name: 'number-id',
             type: 'text',
             valueType: 'string',
+            placeholder: 'ingrese su CC o INE',
           },
           {
             label: 'Edad (años)',
+            name: 'age',
+            required: true,
             type: 'number',
             valueType: 'number',
+            placeholder: '0',
           },
         ],
       }
@@ -39,22 +46,30 @@ export const TEMPLATES_MOCK = new Map<string, FormTemplate>([
         inputs: [
           {
             label: 'Nombre completo',
+            name: 'full-name',
+            required: true,
             type: 'text',
             valueType: 'string',
             fileType: null,
           },
           {
             label: 'Es extranjero',
+            name: 'foreign',
+            required: false,
             type: 'select',
             valueType: 'boolean',
           },
           {
             label: 'Número de identificación personal',
+            name: 'number-id',
+            required: true,
             type: 'text',
             valueType: 'string',
           },
           {
             label: 'Fecha de nacimiento',
+            name: 'birthdate',
+            required: false,
             type: 'datepicker',
             valueType: 'timestamp',
           },
