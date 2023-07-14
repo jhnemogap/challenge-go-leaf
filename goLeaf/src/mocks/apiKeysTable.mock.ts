@@ -17,10 +17,4 @@ export const API_KEYS_MOCK = new Map([
       clienteId: "ABC90003XYZ",
     }
   ],
-  [
-    "x-fakeX1000-Soy100%Real-x",
-    {
-      clienteId: "ABC90004XYZ",
-    }
-  ],
 ]);

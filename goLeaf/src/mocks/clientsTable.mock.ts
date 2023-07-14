@@ -17,10 +17,4 @@ export const CLIENTS_MOCK = new Map([
       name: "IRIS",
     },
   ],
-  [
-    "ABC90004XYZ",
-    {
-      name: "Fintech #4 (no es cliente)",
-    }
-  ],
 ]);

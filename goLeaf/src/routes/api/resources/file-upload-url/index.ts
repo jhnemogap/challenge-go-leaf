@@ -1,6 +1,6 @@
 import { BASE_URL } from '../../../../constants/configs.const.ts';
 
-import { API_KEYS_MOCK, CLIENTS_MOCK } from '../../../../mocks/index.ts';
+import { API_KEYS_MOCK, CLIENTS_MOCK, USERS_MOCK } from '../../../../mocks/index.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 
@@ -20,21 +20,23 @@ export const handler: Handlers<FileUploadUrlResponse | null> = {
         { status: 403, statusText: 'Forbidden' }
       );
     }
-    const userId = validateUserId(_req);
-    if (userId === '') {
+    const user = validateUser(_req);
+    if (user === null) {
       return new Response(
         JSON.stringify({ message: 'User ID not found' }),
         { status: 404, statusText: 'Not Found' }
       );
     }
-    const body = generateRespBody({ userId, clientId: client.id });
+    const body = generateRespBody({ userId: user.id, clientId: client.id, jwt: user.jwt });
     return new Response(JSON.stringify(body), { status: 200 });
   },
 };
 
-function validateUserId(req: Request): UserId {
+function validateUser(req: Request) {
   const url = new URL(req.url);
-  return url.searchParams.get('user_id') ?? '';
+  const userId = url.searchParams.get('user_id') ?? '';
+  const user = USERS_MOCK.get(userId) ?? null;
+  return user ? { ...user, id: userId } : null;
 }
 
 function validateApiKey(req: Request): ApiKey {
@@ -49,11 +51,11 @@ function getClientByApiKey(apiKey: ApiKey) {
 }
 
 function generateRespBody(params: GenerateRespBodyParams) {
-  const { clientId, userId} = params;
+  const { clientId, userId, jwt } = params;
   const url = new URL('/', BASE_URL);
   url.searchParams.set('client_id', clientId);
   url.searchParams.set('user_id', userId);
-  url.searchParams.set('jwt', 'JWTfakeJWTfake');
+  url.searchParams.set('jwt', jwt);
   return { url: url.toString() };
 }
 
@@ -64,8 +66,10 @@ interface FileUploadUrlResponse {
 type ApiKey = string;
 type ClientId = string;
 type UserId = string;
+type JWT = string;
 
 interface GenerateRespBodyParams {
   clientId: ClientId;
   userId: UserId;
+  jwt: JWT;
 }
