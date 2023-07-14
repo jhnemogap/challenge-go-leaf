@@ -3,12 +3,19 @@ import { Head } from "$fresh/runtime.ts";
 import { GoLeafLogo } from "../components/GoLeafLogo.tsx";
 import { FormSection } from '../components/FormSection/index.ts';
 
-import { CLIENTS_MOCK, USERS_MOCK } from '../mocks/index.ts';
+import {
+  CLIENTS_MOCK,
+  TEMPLATES_BY_CLIENT_MOCK,
+  TEMPLATES_MOCK,
+  USERS_MOCK
+} from '../mocks/index.ts';
 
 import type { Handler, PageProps } from '$fresh/server.ts';
+import type { FormTemplate } from '../domain/models/index.ts';
 
 export default function Home(props: PageProps) {
-  const { data: { user, client } } = props;
+  const { data: { user, client, template } } = props;
+  console.info({ user, client, template });
 
   return (
     <>
@@ -34,7 +41,19 @@ export default function Home(props: PageProps) {
 export const handler: Handler = function(req, ctx) {
   const _resp = validateSearchParams(req);
   if (_resp.isError) return _resp.response;
-  return ctx.render(_resp.info);
+  const template = getTemplateByClient({ clientId: _resp.info.client.id });
+  if (!template) {
+    return new Response(
+      'No tenemos ese modelo de formulario',
+      { status: 404, statusText: 'Form template not Found' }
+    );
+  }
+  return ctx.render({ ..._resp.info, template });
+}
+
+function getTemplateByClient({ clientId }: { clientId: string; }): FormTemplate | null {
+  const templateId = TEMPLATES_BY_CLIENT_MOCK.get(clientId)?.templates?.[0] ?? '';
+  return TEMPLATES_MOCK.get(templateId) ?? null;
 }
 
 function validateSearchParams(_req: Request) {
