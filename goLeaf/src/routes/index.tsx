@@ -1,7 +1,6 @@
 import { Head } from "$fresh/runtime.ts";
 
-import { GoLeafLogo } from "../components/GoLeafLogo.tsx";
-import { FormSection } from '../components/FormSection/index.ts';
+import { FormSection, GoLeafLogo } from '../components/index.ts';
 
 import {
   CLIENTS_MOCK,
@@ -11,28 +10,29 @@ import {
 } from '../mocks/index.ts';
 
 import type { Handler, PageProps } from '$fresh/server.ts';
-import type { FormTemplate } from '../domain/models/index.ts';
+import type { FormTemplate } from '../domain/index.ts';
 
 export default function Home(props: PageProps) {
   const { data: { user, client, template } } = props;
-  console.info({ user, client, template });
-
   return (
     <>
       <Head>
         <title>GoLeaf - Automatiza alta de empresas</title>
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
-        <header>
-          <GoLeafLogo />
-        </header>
-
-        <main>
-          <h1>Bienvenido a GoLeaf <span>{user.name}</span></h1>
-          <p>Para dar de alta tu empresa en {client.name}</p>
-          <p>Sube tus datos aquí</p>
-          <FormSection />
-        </main>
+      <div class="h-full min-h-screen pt-2 px-4 pb-8 bg-green-50">
+        <div class="m-auto w-full max-w-5xl">
+          <header>
+            <GoLeafLogo />
+          </header>
+          <main>
+            <h1 class='text(4xl center) leading-normal'>
+              Bienvenido a GoLeaf <span>{user?.name}</span>
+            </h1>
+            <p>Para dar de alta tu empresa en {client.name}</p>
+            <p>Sube tus datos aquí</p>
+            <FormSection template={template} />
+          </main>
+        </div>
       </div>
     </>
   );
