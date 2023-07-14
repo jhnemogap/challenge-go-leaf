@@ -1,4 +1,4 @@
-import type { FormTemplate } from '../domain/models/index.ts';
+import type { FormTemplate } from '../domain/index.ts';
 
 export const TEMPLATES_MOCK = new Map<string, FormTemplate>([
   [

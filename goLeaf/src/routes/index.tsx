@@ -1,7 +1,6 @@
 import { Head } from "$fresh/runtime.ts";
 
-import { GoLeafLogo } from "../components/GoLeafLogo.tsx";
-import { FormSection } from '../components/FormSection/index.ts';
+import { FormSection, GoLeafLogo } from '../components/index.ts';
 
 import {
   CLIENTS_MOCK,
@@ -11,12 +10,10 @@ import {
 } from '../mocks/index.ts';
 
 import type { Handler, PageProps } from '$fresh/server.ts';
-import type { FormTemplate } from '../domain/models/index.ts';
+import type { FormTemplate } from '../domain/index.ts';
 
 export default function Home(props: PageProps) {
   const { data: { user, client, template } } = props;
-  console.info({ user, client, template });
-
   return (
     <>
       <Head>
@@ -26,12 +23,11 @@ export default function Home(props: PageProps) {
         <header>
           <GoLeafLogo />
         </header>
-
         <main>
-          <h1>Bienvenido a GoLeaf <span>{user.name}</span></h1>
+          <h1>Bienvenido a GoLeaf <span>{user?.name}</span></h1>
           <p>Para dar de alta tu empresa en {client.name}</p>
           <p>Sube tus datos aquí</p>
-          <FormSection />
+          <FormSection template={template} />
         </main>
       </div>
     </>

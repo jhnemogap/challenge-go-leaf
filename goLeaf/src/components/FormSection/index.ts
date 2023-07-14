@@ -1,1 +1,1 @@
-export * from './FormSection.tsx';
+export { FormSection } from './FormSection.tsx';
