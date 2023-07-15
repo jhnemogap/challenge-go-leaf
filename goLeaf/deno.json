@@ -9,4 +9,13 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
+  "fmt": {
+    "useTabs": true,
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "proseWrap": "always",
+    "semiColons": true,
+    "singleQuote": true,
+    "include": ["src/"]
+  }
 }

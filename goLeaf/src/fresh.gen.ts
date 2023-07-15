@@ -2,23 +2,18 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/[name].tsx";
-import * as $1 from "./routes/api/resources/file-upload-url/_middleware.ts";
-import * as $2 from "./routes/api/resources/file-upload-url/index.ts";
-import * as $3 from "./routes/index.tsx";
-import * as $$0 from "./islands/Counter.tsx";
+import * as $0 from './routes/api/resources/file-upload-url/_middleware.ts';
+import * as $1 from './routes/api/resources/file-upload-url/index.ts';
+import * as $2 from './routes/index.tsx';
 
 const manifest = {
-  routes: {
-    "./routes/[name].tsx": $0,
-    "./routes/api/resources/file-upload-url/_middleware.ts": $1,
-    "./routes/api/resources/file-upload-url/index.ts": $2,
-    "./routes/index.tsx": $3,
-  },
-  islands: {
-    "./islands/Counter.tsx": $$0,
-  },
-  baseUrl: import.meta.url,
+	routes: {
+		'./routes/api/resources/file-upload-url/_middleware.ts': $0,
+		'./routes/api/resources/file-upload-url/index.ts': $1,
+		'./routes/index.tsx': $2,
+	},
+	islands: {},
+	baseUrl: import.meta.url,
 };
 
 export default manifest;
