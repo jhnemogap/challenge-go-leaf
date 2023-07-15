@@ -1,4 +1,4 @@
-import { MiddlewareHandlerContext } from '$fresh/server.ts';
+import type { MiddlewareHandlerContext } from '$fresh/src/server/types.ts';
 
 export async function handler(req: Request, ctx: MiddlewareHandlerContext) {
 	const preflightResp = preflightRequests(req);

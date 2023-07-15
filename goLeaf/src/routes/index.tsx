@@ -2,14 +2,9 @@ import { Head } from '$fresh/runtime.ts';
 
 import { FormSection, GoLeafLogo } from '../components/index.ts';
 
-import {
-	CLIENTS_MOCK,
-	TEMPLATES_BY_CLIENT_MOCK,
-	TEMPLATES_MOCK,
-	USERS_MOCK,
-} from '../mocks/index.ts';
+import { BASE_URL } from '../constants/configs.const.ts';
 
-import type { Handlers, PageProps } from '$fresh/server.ts';
+import type { Handlers, PageProps } from '$fresh/src/server/types.ts';
 import type { FormTemplate } from '../domain/index.ts';
 
 export default function Home(props: PageProps) {
@@ -39,30 +34,43 @@ export default function Home(props: PageProps) {
 }
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
-    const _resp = validateSearchParams(req);
-    if (_resp.isError) return _resp.response;
-    const template = getTemplateByClient({ clientId: _resp.info.client.id });
-    if (!template) {
-      return new Response(
-        'No tenemos ese modelo de formulario',
-        { status: 404, statusText: 'Form template not Found' },
-      );
-    }
-    return ctx.render({ ..._resp.info, template });
-  },
-  async POST(req, _) {
-    const form = await req.formData();
-    console.info(3000, [...form.entries()]);
-    const headers = new Headers();
-    headers.set('location', req.url);
-    return new Response(null, { status: 303, headers });
-  },
+	async GET(req, ctx) {
+		const _resp = validateSearchParams(req);
+		if (_resp.isError) return _resp.response;
+		const template = getTemplateByClient({ clientId: _resp.info.client.id });
+		if (!template) {
+			return new Response(
+				'No tenemos ese modelo de formulario',
+				{ status: 404, statusText: 'Form template not Found' },
+			);
+		}
+		return ctx.render({ ..._resp.info, template });
+	},
+	async POST(req, _) {
+		const form = await req.formData();
+		const data = Object.fromEntries(form.entries());
+		sessionStorage.setItem('data-from-form', JSON.stringify(data));
+		return Response.redirect(new URL('/uploaded-form', BASE_URL), 301);
+	},
+};
+
+import {
+	CLIENTS_MOCK,
+	TEMPLATES_BY_CLIENT_MOCK,
+	TEMPLATES_MOCK,
+	USERS_MOCK,
+} from '../mocks/index.ts';
+
+function getSearchParams(urlString: string) {
+	const url = new URL(urlString);
+	return {
+		clientId: url.searchParams.get('client_id') ?? '',
+		userId: url.searchParams.get('user_id') ?? '',
+		jwt: url.searchParams.get('jwt') ?? '',
+	};
 }
 
-function getTemplateByClient(
-	{ clientId }: { clientId: string },
-): FormTemplate | null {
+function getTemplateByClient({ clientId }: { clientId: string }): FormTemplate | null {
 	const templateId = TEMPLATES_BY_CLIENT_MOCK.get(clientId)?.templates?.[0] ?? '';
 	return TEMPLATES_MOCK.get(templateId) ?? null;
 }
@@ -104,14 +112,5 @@ function validateSearchParams(_req: Request) {
 			user: { ...user, id: userId },
 			client: { ...client, id: clientId },
 		},
-	};
-}
-
-function getSearchParams(urlString: string) {
-	const url = new URL(urlString);
-	return {
-		clientId: url.searchParams.get('client_id') ?? '',
-		userId: url.searchParams.get('user_id') ?? '',
-		jwt: url.searchParams.get('jwt') ?? '',
 	};
 }

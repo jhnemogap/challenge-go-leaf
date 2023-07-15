@@ -1,3 +1,3 @@
 export default function EmptyIsland() {
-  return null;
+	return null;
 }

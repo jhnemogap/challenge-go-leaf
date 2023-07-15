@@ -2,7 +2,7 @@ import { BASE_URL } from '../../../../constants/configs.const.ts';
 
 import { API_KEYS_MOCK, CLIENTS_MOCK, USERS_MOCK } from '../../../../mocks/index.ts';
 
-import type { Handlers } from '$fresh/server.ts';
+import type { Handlers } from '$fresh/src/server/types.ts';
 
 export const handler: Handlers<FileUploadUrlResponse | null> = {
 	GET(_req: Request) {

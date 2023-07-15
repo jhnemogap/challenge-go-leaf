@@ -5,6 +5,7 @@
 import * as $0 from './routes/api/resources/file-upload-url/_middleware.ts';
 import * as $1 from './routes/api/resources/file-upload-url/index.ts';
 import * as $2 from './routes/index.tsx';
+import * as $3 from './routes/uploaded-form.tsx';
 import * as $$0 from './islands/EmptyIsland.tsx';
 
 const manifest = {
@@ -12,6 +13,7 @@ const manifest = {
 		'./routes/api/resources/file-upload-url/_middleware.ts': $0,
 		'./routes/api/resources/file-upload-url/index.ts': $1,
 		'./routes/index.tsx': $2,
+		'./routes/uploaded-form.tsx': $3,
 	},
 	islands: {
 		'./islands/EmptyIsland.tsx': $$0,
