@@ -5,7 +5,7 @@ export function FormSection(props: Props) {
 	return (
 		<section class='w-full max-w-2xl m-auto mt-4 flex flex-col gap-4'>
 			<h1 class='text(xl center) font-semibold'>{title}</h1>
-			<form class='w-full max-w-lg m-auto py-4 px-5 rounded-lg bg-yellow-300'>
+			<form method='post' class='w-full max-w-lg m-auto py-4 px-5 rounded-lg bg-yellow-300'>
 				{inputs.map(({ label, name, required, type, placeholder }) => (
 					<fieldset key={`input-${name}`} class='mb-4'>
 						<label class='flex flex-col gap-1'>
@@ -20,6 +20,9 @@ export function FormSection(props: Props) {
 						</label>
 					</fieldset>
 				))}
+        <button type='submit' class='px-5 py-3 rounded-lg border(1 solid gray-300) bg-green-100'>
+          Enviar
+        </button>
 			</form>
 		</section>
 	);

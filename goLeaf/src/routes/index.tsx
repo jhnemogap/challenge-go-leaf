@@ -9,7 +9,7 @@ import {
 	USERS_MOCK,
 } from '../mocks/index.ts';
 
-import type { Handler, PageProps } from '$fresh/server.ts';
+import type { Handlers, PageProps } from '$fresh/server.ts';
 import type { FormTemplate } from '../domain/index.ts';
 
 export default function Home(props: PageProps) {
@@ -38,24 +38,32 @@ export default function Home(props: PageProps) {
 	);
 }
 
-export const handler: Handler = function (req, ctx) {
-	const _resp = validateSearchParams(req);
-	if (_resp.isError) return _resp.response;
-	const template = getTemplateByClient({ clientId: _resp.info.client.id });
-	if (!template) {
-		return new Response(
-			'No tenemos ese modelo de formulario',
-			{ status: 404, statusText: 'Form template not Found' },
-		);
-	}
-	return ctx.render({ ..._resp.info, template });
-};
+export const handler: Handlers = {
+  async GET(req, ctx) {
+    const _resp = validateSearchParams(req);
+    if (_resp.isError) return _resp.response;
+    const template = getTemplateByClient({ clientId: _resp.info.client.id });
+    if (!template) {
+      return new Response(
+        'No tenemos ese modelo de formulario',
+        { status: 404, statusText: 'Form template not Found' },
+      );
+    }
+    return ctx.render({ ..._resp.info, template });
+  },
+  async POST(req, _) {
+    const form = await req.formData();
+    console.info(3000, [...form.entries()]);
+    const headers = new Headers();
+    headers.set('location', req.url);
+    return new Response(null, { status: 303, headers });
+  },
+}
 
 function getTemplateByClient(
 	{ clientId }: { clientId: string },
 ): FormTemplate | null {
-	const templateId = TEMPLATES_BY_CLIENT_MOCK.get(clientId)?.templates?.[0] ??
-		'';
+	const templateId = TEMPLATES_BY_CLIENT_MOCK.get(clientId)?.templates?.[0] ?? '';
 	return TEMPLATES_MOCK.get(templateId) ?? null;
 }
 
