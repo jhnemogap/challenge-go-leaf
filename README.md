@@ -1,3 +1,3 @@
 # Challenge GLeaf 
 
-v0.1.0-alpha.2
+v0.1.0-alpha.3

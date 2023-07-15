@@ -131,3 +131,6 @@ dist
 
 # mix macos
 .DS_Store
+
+# jetbrains configs
+.idea/codeStyles/*
