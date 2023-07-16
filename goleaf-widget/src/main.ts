@@ -1,8 +1,7 @@
-import './app.css'
-import App from './App.svelte'
+import GoLeafWidget from './GoLeafWidget.svelte';
 
-const app = new App({
+const app = new GoLeafWidget({
   target: document.getElementById('app'),
-})
+});
 
-export default app
+export default app;
