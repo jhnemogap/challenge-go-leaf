@@ -1,23 +1,19 @@
 <svelte:options customElement={{ tag: "goleaf-widget", shadow: "open" }} />
 
-<!--<script lang="ts">-->
-<!--</script>-->
+<script lang="ts">
+	function onClickCtaBtn() {
+		console.info('onClickCtaBtn');
+	}
+</script>
 
 <main>
-	<button class="cta-btn">
+	<button class="cta-btn" on:click={onClickCtaBtn}>
 		Subir datos
 	</button>
-<!--		<a-->
-<!--			target="_blank"-->
-<!--			rel="noreferrer"-->
-<!--			href="https://github.com/sveltejs/kit#readme"-->
-<!--		>-->
-<!--			SvelteKit-->
-<!--		</a>-->
 </main>
 
 <style>
-	main:global {
+	:global(main) {
 		--brand-color-primary: #26970D;
 		--brand-color-secondary: #CFFAC7;
 		--font-color-primary: midnightblue;
