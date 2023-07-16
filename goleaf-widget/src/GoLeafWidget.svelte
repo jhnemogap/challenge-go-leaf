@@ -1,3 +1,5 @@
+<svelte:options customElement={{ tag: "goleaf-widget", shadow: "open" }} />
+
 <script lang="ts">
   import Counter from './lib/Counter.svelte';
 </script>

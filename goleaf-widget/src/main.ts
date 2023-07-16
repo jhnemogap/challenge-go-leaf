@@ -1,7 +1,2 @@
+// Is's necessary this import to convert into a web component
 import GoLeafWidget from './GoLeafWidget.svelte';
-
-const app = new GoLeafWidget({
-  target: document.getElementById('app'),
-});
-
-export default app;
