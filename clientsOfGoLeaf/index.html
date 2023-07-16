@@ -52,15 +52,12 @@
     </section>
 
 		<aside>
-			<goleaf-widget></goleaf-widget>
+			<h3>Este es el botón como un Web Component</h3>
+			<goleaf-widget id="gl-widget" apikey="" userid=""></goleaf-widget>
 		</aside>
   </body>
 
-	<script
-		crossorigin="anonymous"
-		type="module"
-		src="../goleaf-widget/build/assets/index-58542d9c.js"
-	></script>
+	<script type="module" src="./goLeaf-widget.js"></script>
 
   <script defer>
     const clients = [
@@ -135,6 +132,7 @@
     const $clients = document.getElementById("select-client");
     const $users = document.getElementById("select-user");
     const $cta = document.getElementById("cta-button");
+		const $glWidget = document.getElementById("gl-widget");
 
     let selectedClientId;
     let selectedApiKey;
@@ -144,6 +142,7 @@
       const client = clients[parseInt(clientValue)];
       selectedClientId = client.uuid;
       selectedApiKey = client.apiKey;
+			$glWidget.setAttribute("apikey", selectedApiKey);
       $clientName.textContent = client.name;
       $description.textContent = client.description;
       changeUser(0);
@@ -155,6 +154,7 @@
         .find((c) => c.uuid === selectedClientId)
         .users[parseInt(userValue)];
       selectedUserId = user.uuid;
+			$glWidget.setAttribute("userid", selectedUserId);
       $userName.textContent = user.name;
       $users.disabled = false;
       $usersRadio[userValue].checked = true;

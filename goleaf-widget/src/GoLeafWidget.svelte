@@ -2,10 +2,13 @@
 
 <script>
 	import { StartButton } from './components';
+
+	export let apikey = '';
+	export let userid = '';
 </script>
 
 <main>
-	<StartButton />
+	<StartButton apiKey={apikey} userId={userid} />
 </main>
 
 <style>

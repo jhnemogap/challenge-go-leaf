@@ -1,14 +1,15 @@
 {
   "name": "goleaf-widget",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
+		"install:0": "npm run clean:full && npm install",
     "dev": "vite",
     "build": "vite build --outDir build",
     "preview": "vite preview --outDir build",
 		"clean": "rm -rf build/ dist/",
-		"clean:full": "npm run clean && rm -rf node_modules/",
+		"clean:full": "npm run clean && rm -rf node_modules/ package-lock.json",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
